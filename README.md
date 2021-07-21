@@ -1,34 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Phorum
 
-## Getting Started
+#
 
-First, run the development server:
+## FEATURES
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- User can create an account and have a profile
+- User can log in
+- User can change password
+- User can reset password
+- User & guest can read posts
+- User can create posts
+- User can comment on posts
+- User can update own comment
+- User can delete own comment
+- User can update own posts
+- User can delete own posts
+- User can bookmark posts
+- Extras: JWT Authorization
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Technologies used
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
+- Nextjs
+- Mongodb
+- JWT
+- SCSS
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#
 
-## Learn More
+### API ENDPOINTS
 
-To learn more about Next.js, take a look at the following resources:
+#
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| URI                                    | HTTP Method | Description           | Status |
+| -------------------------------------- | ----------- | --------------------- | ------ |
+| <code>/api/auth/signup</code>          | `POST`      | Create an account.    | Done   |
+| <code>/api/auth/login</code>           | `POST`      | Log in to an account. | Done   |
+| <code>/api/auth/forgot-password</code> | `POST`      | Forgot password       | Done   |
+| <code>/api/auth/reset-password</code>  | `PATCH`     | Reset password.       | Done   |
+| <code>/api/auth/change-password</code> | `PATCH`     | Change user password. | Done   |
 
-## Deploy on Vercel
+#
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### POSTS API Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| URI                                                | HTTP Method | Description               | Status |
+| -------------------------------------------------- | ----------- | ------------------------- | ------ |
+| <code>/api/posts?q=query&page=1&per_page=10</code> | `GET`       | List all posts available. | Done   |
+| <code>/api/posts/create</code>                     | `POST`      | Create a post             | Done   |
+| <code>/api/posts/:id</code>                        | `GET`       | Get a post by id          | Done   |
+| <code>/api/posts/:id/remove</code>                 | `DELETE`    | Delete a post.            | Done   |
+| <code>/api/posts/:id/update</code>                 | `PATCH`     | Update a post.            | Done   |
+
+#
+
+#### COMMENTS API Routes
+
+| URI                                   | HTTP Method | Description             | Status |
+| ------------------------------------- | ----------- | ----------------------- | ------ |
+| <code>/api/comments/:id</code>        | `GET`       | Get comments by post id | Done   |
+| <code>/api/comments/:id/create</code> | `POST`      | Create a comment.       | Done   |
+| <code>/api/comments/:id/remove</code> | `DELETE`    | Delete comment by id.   | Done   |
+| <code>/api/comments/:id/update</code> | `PATCH`     | update a comment by id. | Done   |
+
+#
+
+#### LIKES API Routes
+
+| URI                                | HTTP Method | Description                           | Status |
+| ---------------------------------- | ----------- | ------------------------------------- | ------ |
+| <code>/api/likes/:id/count</code>  | `GET`       | Number of likes by comment or post Id | Done   |
+| <code>/api/likes/:id/like</code>   | `POST`      | Like a comment / post by id           | Done   |
+| <code>/api/likes/:id/unlike</code> | `POST`      | unlike a comment / post by id         | Done   |
+
+#
+
+#### USERS API Routes
+
+| URI                                                | HTTP Method | Description                   | Status |
+| -------------------------------------------------- | ----------- | ----------------------------- | ------ |
+| <code>/api/users?q=query&page=1&per_page=10</code> | `GET`       | Get all users                 | Done   |
+| <code>/api/users/:id</code>                        | `GET`       | Get a user by id              | Done   |
+| <code>/api/users/:id/posts</code>                  | `GET`       | Get all posts by a user.      | Done   |
+| <code>/api/users/:id/followers</code>              | `GET`       | Get all followers by a user.  | To do  |
+| <code>/api/users/:id/followings</code>             | `GET`       | Get all followings of a user. | To do  |
+| <code>/api/users/:id/remove</code>                 | `DELETE`    | remove a user by id.          | Done   |
+| <code>/api/users/:id/update</code>                 | `PATCH`     | update a user by id.          | To do  |
+
+#
+
+#### FOLLOWS API Routes
+
+| URI                                  | HTTP Method | Description     | Status |
+| ------------------------------------ | ----------- | --------------- | ------ |
+| <code>/api/likes/:id/follow</code>   | `POST`      | follow a user   | To do  |
+| <code>/api/likes/:id/unfollow</code> | `POST`      | Unfollow a user | To do  |

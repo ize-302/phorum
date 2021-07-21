@@ -85,8 +85,8 @@
 | <code>/api/users?q=query&page=1&per_page=10</code> | `GET`       | Get all users                 | Done   |
 | <code>/api/users/:id</code>                        | `GET`       | Get a user by id              | Done   |
 | <code>/api/users/:id/posts</code>                  | `GET`       | Get all posts by a user.      | Done   |
-| <code>/api/users/:id/followers</code>              | `GET`       | Get all followers by a user.  | To do  |
-| <code>/api/users/:id/following</code>              | `GET`       | Get all followings of a user. | To do  |
+| <code>/api/users/:id/followers</code>              | `GET`       | Get all followers by a user.  | Done   |
+| <code>/api/users/:id/following</code>              | `GET`       | Get all followings of a user. | Done   |
 | <code>/api/users/:id/follow</code>                 | `POST`      | follow a user                 | To do  |
 | <code>/api/users/:id/unfollow</code>               | `POST`      | Unfollow a user               | To do  |
 | <code>/api/users/:id/remove</code>                 | `DELETE`    | remove a user by id.          | Done   |

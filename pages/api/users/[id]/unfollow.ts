@@ -19,21 +19,22 @@ export default async function handler(
 ) {
   const id = req.query.id;
   if (req.method === "POST") {
+    // AUTHoRIZATION
     const { authorization }: any = req.headers;
     const isAuthorized = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
-    // find user
-    const findUser: any = await User.findOne({
+    // HANDLE UNFOLLOW FOR FOLLOWEE
+    // find followee's details
+    const followee: any = await User.findOne({
       _id: id,
     });
-    let followers = findUser.followers;
-    // remove from follower
+    let followers = followee.followers;
+    // remove follower from followee's followers list
     followers = followers.filter((follower: any) => {
       return follower !== isAuthorized.user.id;
     });
-    console.log(followers);
     const updateFollowers: any = await User.findOneAndUpdate(
       {
         _id: id,
@@ -42,7 +43,25 @@ export default async function handler(
         followers: followers,
       }
     );
-    if (updateFollowers) {
+    // HANDLE UNFOLLOW FOR FOLLOWER
+    // find follower's details
+    const follower: any = await User.findOne({
+      _id: isAuthorized.user.id,
+    });
+    let following = follower.following;
+    following = following.filter((followee: any) => {
+      return followee !== id;
+    });
+    const updateFollowing: any = await User.findOneAndUpdate(
+      {
+        _id: isAuthorized.user.id,
+      },
+      {
+        following: following,
+      }
+    );
+    // remove from follwoing
+    if (updateFollowers && updateFollowing) {
       res.json({
         status: "ok",
       });

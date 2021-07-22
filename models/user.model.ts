@@ -10,7 +10,7 @@ const userSchema = new Schema({
   joined: { type: String, required: true },
   role: { type: String, required: true },
   followers: { type: Array, required: true },
-  followings: { type: Array, required: true },
+  following: { type: Array, required: true },
 });
 
 userSchema.plugin(mongoosePaginate);

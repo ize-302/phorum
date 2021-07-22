@@ -6,7 +6,6 @@ import messages from "../../../../utils/messages";
 
 connectToDatabase();
 
-//set bodyparser
 export const config = {
   api: {
     externalResolver: true,
@@ -19,33 +18,36 @@ export default async function handler(
 ) {
   const id = req.query.id;
   if (req.method === "POST") {
+    // AUTHORIZATION
     const { authorization }: any = req.headers;
     const isAuthorized = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
-    // find user
-    const findUser: any = await User.findOne({
-      _id: id,
-    });
+    // VALIDATION
     if (id === isAuthorized.user.id) {
       return res.json({
         message: "Can't follow self",
         success: false,
       });
     }
-    let followers = findUser.followers;
-    // check if already following
-    const alreadyFollowing = followers.find((follower) => {
+    // HANDLE FOLLOWER'S FOR FOLLOWEE
+    // get followee details
+    const followee: any = await User.findOne({
+      _id: id,
+    });
+    let followers = followee.followers;
+    // check if follower already following
+    const isFollowing = followers.find((follower) => {
       return follower === isAuthorized.user.id;
     });
-    if (alreadyFollowing) {
+    if (isFollowing) {
       return res.json({
         message: "Already following",
         success: false,
       });
     }
-    // add to followers
+    // add to followee's followers list
     followers.unshift(isAuthorized.user.id);
     const updateFollowers: any = await User.findOneAndUpdate(
       {
@@ -55,7 +57,24 @@ export default async function handler(
         followers: followers,
       }
     );
-    if (updateFollowers) {
+    // HANDLE FOLLWING FOR FOLLOWER's FOLLOWERS
+    // get followe's details
+    let follower: any = await User.findOne({
+      _id: isAuthorized.user.id,
+    });
+    let following = follower.following;
+    // add  followee to follower's following list
+    following.unshift(id);
+    const updateFollowing: any = await User.findOneAndUpdate(
+      {
+        _id: isAuthorized.user.id,
+      },
+      {
+        following: following,
+      }
+    );
+
+    if (updateFollowers && updateFollowing) {
       res.json({
         status: "ok",
       });

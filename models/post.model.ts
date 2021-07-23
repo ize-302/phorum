@@ -15,6 +15,6 @@ const postSchema = new Schema({
 postSchema.plugin(mongoosePaginate);
 postSchema.plugin(mongooseHidden, { hidden: { __v: true, _id: false } });
 
-const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 export default Post;

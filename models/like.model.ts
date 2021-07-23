@@ -9,6 +9,6 @@ const LikeSchema = new Schema({
 
 LikeSchema.plugin(mongooseHidden, { hidden: { __v: true, _id: false } });
 
-const Like = mongoose.models.Like || mongoose.model("Like", LikeSchema);
+const Like = mongoose.model("Like", LikeSchema);
 
 export default Like;

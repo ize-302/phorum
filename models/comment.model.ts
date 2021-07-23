@@ -13,7 +13,6 @@ const CommentSchema = new Schema({
 
 CommentSchema.plugin(mongooseHidden, { hidden: { __v: true, _id: false } });
 
-const Comment =
-  mongoose.models.Comment || mongoose.model("Comment", CommentSchema);
+const Comment = mongoose.model("Comment", CommentSchema);
 
 export default Comment;

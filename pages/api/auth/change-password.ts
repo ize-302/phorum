@@ -22,7 +22,7 @@ export default async function handler(
   if (req.method === "PATCH") {
     const { currentPassword, newPassword, repeatNewPassword } = req.body;
     const { authorization }: any = req.headers;
-    const isAuthorized = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }

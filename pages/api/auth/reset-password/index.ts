@@ -20,13 +20,13 @@ export default async function handler(
 ) {
   // used to reset password if password reset link is successfully validated
   if (req.method === "PATCH") {
-    const { password, repeatPassword } = req.body;
+    const { newPassword, repeatNewPassword } = req.body;
     const { authorization }: any = req.headers;
     const isAuthorized = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
-    if (password !== repeatPassword) {
+    if (newPassword !== repeatNewPassword) {
       return res.json({ message: "Password don't match", success: false });
     }
 
@@ -35,7 +35,7 @@ export default async function handler(
         _id: isAuthorized.user.id,
       },
       {
-        password: bcrypt.hashSync(password, 10),
+        password: bcrypt.hashSync(newPassword, 10),
       }
     );
 

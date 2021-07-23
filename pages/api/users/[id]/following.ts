@@ -27,15 +27,15 @@ export default async function handler(
           return response.data;
         });
     }
-    // get following
+    // get user's following
     const findUser = await User.findOne({ _id: id });
-    let followingsIds = findUser.followings;
-    let followings = [];
+    let followingIds = findUser.following;
+    let following: any = [];
 
-    for (let i = 0; i < followingsIds.length; i++) {
-      let following = await fetchUser(followingsIds[i]);
-      followings.push(following);
+    for (let i = 0; i < followingIds.length; i++) {
+      let user = await fetchUser(followingIds[i]);
+      following.push(user);
     }
-    res.json(followings);
+    res.json(following);
   }
 }

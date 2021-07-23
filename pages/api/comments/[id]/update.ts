@@ -22,13 +22,13 @@ export default async function handler(
   if (req.method === "PATCH") {
     const id = req.query.id;
     const { authorization }: any = req.headers;
-    const isAuthorized : any = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
 
     const form = new formidable.IncomingForm();
-    form.parse(req, async (_err: any, fields: { body: string }) => {
+    form.parse(req, async (err, fields: any, files) => {
       const { body } = fields;
       if (!body) {
         res.json(messages.commentNotCreated);

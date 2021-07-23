@@ -9,6 +9,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // get author detail
+  async function fetchUser(authorId: any) {
+    return axios
+      .get(`http://${req.headers.host}/api/users/${authorId}`)
+      .then((response) => {
+        return response.data;
+      });
+  }
   if (req.method === "GET") {
     const id = req.query.id;
     let findPosts: any = await Post.find({ author: id }).limit(10);
@@ -20,16 +28,6 @@ export default async function handler(
         ],
       }).limit(10);
     }
-
-    // get author detail
-    async function fetchUser(authorId: any) {
-      return axios
-        .get(`http://${req.headers.host}/api/users/${authorId}`)
-        .then((response) => {
-          return response.data;
-        });
-    }
-
     for (let i = 0; i < findPosts.length; i++) {
       findPosts[i].author = await fetchUser(findPosts[i].author);
     }

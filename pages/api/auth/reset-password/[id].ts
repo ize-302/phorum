@@ -18,8 +18,8 @@ export default async function handler(
   // Validate password reset link
   // called when reset password page is visited
   if (req.method === "GET") {
-    const token = req.query.id;
-    const isValid = verifyToken(token);
+    const token: any = req.query.id;
+    const isValid: any = verifyToken(token);
     if (!isValid) {
       return res.json({
         message: "Link has expired. Resend password link again",

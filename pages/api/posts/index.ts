@@ -10,8 +10,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // get author detail
+  async function fetchUser(authorId: any) {
+    return axios
+      .get(`http://${req.headers.host}/api/users/${authorId}`)
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   if (req.method === "GET") {
-    const { q, page, per_page } = req.query;
+    const { q, page, per_page }: any = req.query;
 
     const query = {
       $or: [
@@ -19,15 +28,6 @@ export default async function handler(
         { body: { $regex: new RegExp(q), $options: "i" } },
       ],
     };
-
-    // get author detail
-    async function fetchUser(authorId: any) {
-      return axios
-        .get(`http://${req.headers.host}/api/users/${authorId}`)
-        .then((response) => {
-          return response.data;
-        });
-    }
 
     Post.paginate(query, await paginationOptions(per_page, page))
       .then(async (result: any) => {

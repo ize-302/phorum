@@ -20,7 +20,7 @@ export default async function handler(
   if (req.method === "POST") {
     // AUTHORIZATION
     const { authorization }: any = req.headers;
-    const isAuthorized : any = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
@@ -38,7 +38,7 @@ export default async function handler(
     });
     let followers = followee.followers;
     // check if follower already following
-    const isFollowing = followers.find((follower) => {
+    const isFollowing = followers.find((follower: any) => {
       return follower === isAuthorized.user.id;
     });
     if (isFollowing) {

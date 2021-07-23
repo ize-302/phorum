@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const { q, page, per_page } = req.query;
+    const { q, page, per_page }: any = req.query;
 
     const query = {
       $or: [

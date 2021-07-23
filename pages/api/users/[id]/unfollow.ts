@@ -21,7 +21,7 @@ export default async function handler(
   if (req.method === "POST") {
     // AUTHoRIZATION
     const { authorization }: any = req.headers;
-    const isAuthorized = verifyToken(authorization);
+    const isAuthorized : any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }

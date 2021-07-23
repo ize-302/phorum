@@ -20,7 +20,7 @@ export default async function handler(
   const id = req.query.id;
   if (req.method === "DELETE") {
     const { authorization }: any = req.headers;
-    const isAuthorized = verifyToken(authorization);
+    const isAuthorized : any = verifyToken(authorization);
 
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);

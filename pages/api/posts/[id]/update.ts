@@ -20,36 +20,33 @@ export default async function handler(
 ) {
   if (req.method === "PATCH") {
     const { authorization }: any = req.headers;
-    const isAuthorized : any = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
     const form = new formidable.IncomingForm();
-    form.parse(
-      req,
-      async (_err: any, fields: { title: string; body: string }) => {
-        const { title, body } = fields;
-        const id = req.query.id;
-        const postToUpdate = await Post.findById(id);
-        if (!postToUpdate) {
-          return res.json(messages.postNotFound);
-        }
-        const post = await Post.findOneAndUpdate(
-          {
-            _id: id,
-            author: isAuthorized.user.id,
-          },
-          {
-            title: title || postToUpdate.title,
-            body: body || postToUpdate.body,
-          }
-        );
-        if (post) {
-          res.json(messages.postUpdated);
-        } else {
-          return res.json(messages.notAuthorized);
-        }
+    form.parse(req, async (err, fields: any, files) => {
+      const { title, body } = fields;
+      const id = req.query.id;
+      const postToUpdate = await Post.findById(id);
+      if (!postToUpdate) {
+        return res.json(messages.postNotFound);
       }
-    );
+      const post = await Post.findOneAndUpdate(
+        {
+          _id: id,
+          author: isAuthorized.user.id,
+        },
+        {
+          title: title || postToUpdate.title,
+          body: body || postToUpdate.body,
+        }
+      );
+      if (post) {
+        res.json(messages.postUpdated);
+      } else {
+        return res.json(messages.notAuthorized);
+      }
+    });
   }
 }

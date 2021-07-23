@@ -21,30 +21,27 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { authorization }: any = req.headers;
-    const isAuthorized : any = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
 
     const form = new formidable.IncomingForm();
-    form.parse(
-      req,
-      async (_err: any, fields: { title: string; body: string }) => {
-        const { title, body } = fields;
-        if (!title || !body) {
-          res.json(messages.postNotCreated);
-        }
-        const post = Post.create({
-          title,
-          body,
-          author: isAuthorized.user.id,
-          created: new Date(),
-          updated: new Date(),
-        });
-        if (await post) {
-          res.json(messages.postCreated);
-        }
+    form.parse(req, async (err, fields: any, files) => {
+      const { title, body } = fields;
+      if (!title || !body) {
+        res.json(messages.postNotCreated);
       }
-    );
+      const post = Post.create({
+        title,
+        body,
+        author: isAuthorized.user.id,
+        created: new Date(),
+        updated: new Date(),
+      });
+      if (await post) {
+        res.json(messages.postCreated);
+      }
+    });
   }
 }

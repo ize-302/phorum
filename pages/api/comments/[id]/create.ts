@@ -29,7 +29,7 @@ export default async function handler(
   if (req.method === "POST") {
     const postId = req.query.id;
     const { authorization }: any = req.headers;
-    const isAuthorized : any = verifyToken(authorization);
+    const isAuthorized: any = verifyToken(authorization);
     if (!isAuthorized) {
       return res.json(messages.notAuthorized);
     }
@@ -39,7 +39,7 @@ export default async function handler(
       return res.json(messages.postNotFound);
     }
     const form = new formidable.IncomingForm();
-    form.parse(req, async (_err: any, fields: { body: string }) => {
+    form.parse(req, async (err, fields: any, files) => {
       const { body } = fields;
       if (!body) {
         res.json(messages.commentNotCreated);

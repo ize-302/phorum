@@ -1,4 +1,5 @@
 ## Phorum
+[Postman Documentation](https://web.postman.co/workspace/My-Workspace~dc574d07-716a-4a50-82d9-dd68ab6760ef/documentation/7097316-5ff14e1e-daa5-4861-a156-d17acaaf9ced)
 
 #
 
